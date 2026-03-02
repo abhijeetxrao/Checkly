@@ -11,7 +11,12 @@ function Home() {
     const fetchTodo = async ()=>{
       try {
         setLoading(true)
-        const res = await axios.get('http://localhost:5000/api/todo')
+        const res = await axios.get('http://localhost:3000/todo',{
+          withCredentials:true,
+          headers:{
+            'Content-Type':'application/json'
+          }
+        })
         console.log(res.data);
         setTodo(res.data);
       } catch (error:String) {
@@ -20,8 +25,10 @@ function Home() {
         setLoading(false)
       }
       }
-    }
-  },[])
+      fetchTodo();
+    },[])
+
+
   
   return (
 
