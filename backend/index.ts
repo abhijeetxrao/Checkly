@@ -17,7 +17,7 @@ import authRouter from './routes/user.route.ts'
 const PORT = Number(process.env.PORT) || 3000;
 connectDB();
 
-app.use('/',todoRouter)
+app.use('/todo',todoRouter)
 app.use('/auth', authRouter)
 
 
