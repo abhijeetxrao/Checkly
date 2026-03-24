@@ -25,7 +25,7 @@ function Login() {
     console.log(data);
     toast.success(data.message||"LoggedIn Successfully!");
     localStorage.setItem("jwt",data.token)
-    navigateTo('/')
+    navigateTo('/todo')
   } catch (error: any) {
     toast.error(error.response?.data.message);
     console.log(error.response?.data); // 🔥 important

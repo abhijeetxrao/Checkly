@@ -1,6 +1,6 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
-import User from "../model/user.model";
+import jwt from "jsonwebtoken";
+import type { Request, Response, NextFunction } from "express";
+import User from "../model/user.model.ts";
 
 interface AuthRequest extends Request {
   user?: any;
@@ -11,7 +11,8 @@ export const authenticate = async (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies?.jwt;
+  const token = req.cookies?.token;
+  console.log(token)
 
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -20,19 +21,17 @@ export const authenticate = async (
   try {
     const secret = process.env.JWT_SECRET as string;
 
-    const decoded = jwt.verify(token, secret) as JwtPayload;
+    const decoded = jwt.verify(token, secret) as any;
 
-    if (!decoded || !decoded.userId) {
+    if (!decoded || !decoded.id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    req.user = await User.findById(decoded.userId);
+    req.user = await User.findById(decoded.id);
 
     next();
   } catch (error) {
-    if (error instanceof Error) {
-      return res.status(401).json({ message: error.message });
-    }
-    return res.status(401).json({ message: "Unknown error" });
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
+

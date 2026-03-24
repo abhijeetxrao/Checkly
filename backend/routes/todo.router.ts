@@ -4,9 +4,9 @@ import { createTodo, deleteTodo, getTodos, updateTodo } from '../controller/todo
 import { authenticate } from '../middleware/user.middleware.ts';
 
 router.post('/create',authenticate,createTodo);
-router.get('/fetch', getTodos);
-router.put('/update/:id',updateTodo);
-router.delete('/delete/:id', deleteTodo)
+router.get('/fetch', authenticate, getTodos);
+router.put('/update/:id',authenticate,updateTodo);
+router.delete('/delete/:id',authenticate, deleteTodo)
 
 
 export default router;

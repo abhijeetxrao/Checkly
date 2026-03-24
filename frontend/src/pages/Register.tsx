@@ -10,36 +10,55 @@ function Register() {
 
   const navigateTo = useNavigate();
 
-  const handleSingup = async (e: React.FormEvent<HTMLFormElement>)=>{
-    console.log(e);
-    e.preventDefault();
-    try {
-      const {data}=await axios.post("http://localhost:3000/auth/register",{
-      username, email, password
-    },{
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-      
-    )
-    toast.success(data.message)
-    localStorage.setItem("jwt", data.token)
-    setEmail("")
-    setPassword("")
-    setUsername("")
-    navigateTo("/login")
-    } catch (error:unknown) {
-      toast.error(error.response.data.message||"User registration failed!")
-    }
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  try {
+    const { data } = await axios.post(
+      "http://localhost:3000/auth/register",
+      { username, email, password },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    toast.success(data.message);
+    setEmail("");
+    setPassword("");
+    setUsername("");
+
+    navigateTo("/login");
+  } catch (error: any) {
+  const rawErrors = error.response?.data?.errors;
+
+  let backendErrors = null;
+
+  try {
+    backendErrors = JSON.parse(rawErrors);
+  } catch {
+    backendErrors = null;
   }
+
+  if (Array.isArray(backendErrors)) {
+    backendErrors.forEach((err: any) => {
+      toast.error(err.message);
+    });
+  } else {
+    toast.error(
+      error.response?.data?.message || "User registration failed!"
+    );
+  }
+}
+};
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
         <h1 className="text-black text-center text-xl semi-bold mb-4">Signup</h1>
-        <form onSubmit={handleSingup}>
+        <form onSubmit={handleSignup}>
           {/* //Username */}
           <div className="mb-4">
             <label className="block mb-2 font-semibold">

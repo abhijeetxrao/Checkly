@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface Todo {
   _id: string;
@@ -18,10 +20,12 @@ interface createTodoResponse {
 }
 
 function Home() {
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [todo, setTodo] = useState<Todo[]>([]);
   const [newTodo, setNewTodo] = useState("");
+  const navigateTo = useNavigate();
 
   useEffect(() => {
     const fetchTodo = async () => {
@@ -115,6 +119,20 @@ function Home() {
       
     }
   };
+
+    const logout = async () => {
+    try {
+      await axios.get("http://localhost:3000/auth/logout", {
+        withCredentials: true,
+      });
+      toast.success("User logged out successfully");
+      navigateTo('/');
+      localStorage.removeItem("jwt");
+    } catch (error) {
+      toast.error("Error logging out");
+    }
+  };
+
   const remainingTodos = todo.filter((todo) => !todo.completed).length;
 
   return (
@@ -148,7 +166,7 @@ function Home() {
           
         </ul>)}
         <p className="text-md mx-auto my-2 text-gray-700">{remainingTodos} Todo Remaining</p>
-        <button className="bg-red-400 mx-auto px-3 py-1 rounded-md text-white hover:bg-red-500 ">Logout</button>
+        <button onClick={logout} className="bg-red-400 mx-auto px-3 py-1 rounded-md text-white hover:bg-red-500 ">Logout</button>
       </div>
     </div>
   );
