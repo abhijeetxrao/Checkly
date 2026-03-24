@@ -2,7 +2,7 @@ import axios from "axios"
 import React,{useState} from "react"
 import { Link, useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
-const api_url = "https://checkly-backend-lnx5.onrender.com/"
+const api_url = "https://checkly-backend-lnx5.onrender.com"
 
 function Register() {
   const [username, setUsername] = useState<string>('')

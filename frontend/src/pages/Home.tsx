@@ -19,7 +19,7 @@ interface createTodoResponse {
   todo: Todo;
 }
 
-const api_url = "https://checkly-backend-lnx5.onrender.com/"
+const api_url = "https://checkly-backend-lnx5.onrender.com"
 
 function Home() {
 
