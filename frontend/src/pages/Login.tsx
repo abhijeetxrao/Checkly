@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+const api_url = "https://checkly-backend-lnx5.onrender.com/"
 
 function Login() {
   const [email, setEmail] = useState<string>("");
@@ -17,7 +18,7 @@ function Login() {
 
   try {
     const { data } = await axios.post(
-      "http://localhost:3000/auth/login",
+      `${api_url}/auth/login`,
       { email, password },
       { withCredentials: true }
     );

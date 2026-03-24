@@ -19,6 +19,8 @@ interface createTodoResponse {
   todo: Todo;
 }
 
+const api_url = "https://checkly-backend-lnx5.onrender.com/"
+
 function Home() {
 
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +34,7 @@ function Home() {
       try {
         setLoading(true);
         const res = await axios.get<FetchTodoResponse>(
-          "http://localhost:3000/todo/fetch",
+          `${api_url}/todo/fetch`,
           {
             withCredentials: true,
             headers: {
@@ -57,7 +59,7 @@ function Home() {
     if(!newTodo.trim()) return;
     try {
       const response = await axios.post<createTodoResponse>(
-        "http://localhost:3000/todo/create",
+        `${api_url}/todo/create`,
         {
           text: newTodo,
           completed: false,
@@ -81,7 +83,7 @@ function Home() {
     if (!selected) return;
     try {
       const response = await axios.put(
-        `http://localhost:3000/todo/update/${id}`,
+        `${api_url}/todo/update/${id}`,
         {
           ...selected,
           completed: !selected.completed,
@@ -106,7 +108,7 @@ function Home() {
     if (!selected) return;
     try {
       const response = await axios.delete(
-        `http://localhost:3000/todo/delete/${id}`,
+        `${api_url}/todo/delete/${id}`,
         {
           withCredentials: true,
         },
@@ -122,7 +124,7 @@ function Home() {
 
     const logout = async () => {
     try {
-      await axios.get("http://localhost:3000/auth/logout", {
+      await axios.get(`${api_url}/auth/logout`, {
         withCredentials: true,
       });
       toast.success("User logged out successfully");

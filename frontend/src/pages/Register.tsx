@@ -2,6 +2,7 @@ import axios from "axios"
 import React,{useState} from "react"
 import { Link, useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
+const api_url = "https://checkly-backend-lnx5.onrender.com/"
 
 function Register() {
   const [username, setUsername] = useState<string>('')
@@ -15,7 +16,7 @@ function Register() {
 
   try {
     const { data } = await axios.post(
-      "http://localhost:3000/auth/register",
+      `${api_url}/auth/register`,
       { username, email, password },
       {
         withCredentials: true,
