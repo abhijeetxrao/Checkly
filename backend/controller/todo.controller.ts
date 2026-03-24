@@ -2,6 +2,10 @@ import Todo from '../model/todo.model.ts'
 import type{ Request, Response, Application } from 'express'
 
 
+interface UserRequest extends Request {
+  user: any; // replace 'any' with the actual type of the 'user' property
+}
+
 export const createTodo = async (req: Request, res: Response) => {
   try {
     const {text, completed} = req.body;
