@@ -106,7 +106,7 @@ function Home() {
     const selected = todo.find((t) => t._id === id);
     if (!selected) return;
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `${api_url}/todo/delete/${id}`,
         {
           withCredentials: true,
