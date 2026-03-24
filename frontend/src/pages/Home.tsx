@@ -42,7 +42,6 @@ function Home() {
             },
           },
         );
-        console.log(res.data);
         setTodo(res.data.todos);
         setError(null);
       } catch (error: unknown) {
@@ -68,7 +67,7 @@ function Home() {
           withCredentials: true,
         },
       );
-      console.log(response.data);
+     
       setTodo((todo) => [...todo, response.data.todo]);
       setNewTodo("");
     } catch (err: unknown) {
@@ -92,7 +91,7 @@ function Home() {
           withCredentials: true,
         },
       );
-      console.log(response.data);
+      
       setTodo((prev) =>
         prev.map((t) => (t._id === id ? response.data.todo : t)),
       );
@@ -113,7 +112,7 @@ function Home() {
           withCredentials: true,
         },
       );
-      console.log(response.data);
+     
       setTodo((prev) => prev.filter((t) => t._id !== id));
     } catch (err) {
       setLoading(true)

@@ -29,11 +29,9 @@ export const getTodos = async(req: Request, res: Response) => {
 export const updateTodo = async(req:Request, res:Response)=>{
   try {
     const id = req.params.id;
-    console.log(id)
     const todo = await Todo.findByIdAndUpdate(id, req.body,{new:true});
     res.status(200).json({message: 'Todo updated successfully!',todo})
   } catch (error) {
-    console.log(error)
     res.status(400).json({ message: 'Error in Updating Todo', error })
   }
 }
