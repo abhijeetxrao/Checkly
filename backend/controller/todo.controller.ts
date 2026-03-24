@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import Todo from '../model/todo.model.ts'
 import type{ Request, Response, Application } from 'express'
 
